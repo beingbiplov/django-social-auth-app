@@ -6,6 +6,17 @@
 
 <div class="container" style="padding-bottom: 30px">
   <div class="row">
+
+           {% if messages %}
+              {% for message in messages %}
+
+                <div class="alert alert-{{ message.tags }}">
+                  {{ message }}
+                </div>
+
+              {% endfor %}
+            {% endif %}
+
     <div class="col-md-6 offset-md-3 text-center">
           <a href="{% url 'social:begin' 'github' %}" class="btn btn-primary btn-lg">Login with GitHub</a><br>
         </div>

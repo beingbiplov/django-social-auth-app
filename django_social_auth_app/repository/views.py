@@ -7,6 +7,7 @@ import json
 from django_social_auth_app.repository.models import Tag
 from django_social_auth_app.repository.tables import TagTable
 from django_tables2 import RequestConfig
+from django.contrib import messages
 
 
 def instantiate_repository(repository, user):
@@ -43,6 +44,7 @@ def update_repository(request, repository_id):
     repository.tags.set(Tag.objects.filter(id__in=tags_ids))
     repository.save()
 
+    messages.success(request, 'Repository successfully updated. ')
     response = redirect('/')
     return response
 
@@ -50,6 +52,7 @@ def update_repository(request, repository_id):
 def remove_repository(request, repository_id):
     repository = Repository.objects.get(id=repository_id).delete()
 
+    messages.warning(request, 'Repository successfully removed. ')
     response = redirect('/')
     return response
 
@@ -70,6 +73,7 @@ def get_repositories(request):
     repositories_list = response.json()
 
     create_repositories(repositories_list, user)
+    messages.success(request, 'Repository list successfully updated. ')
 
     response = redirect('/')
     return response
@@ -85,6 +89,7 @@ def new_tag(request, repository_id):
     repository = Repository.objects.get(id=repository_id)
     repository.tags.add(tag)
     repository.save()
+    messages.success(request, 'New tag added successfully! ')
 
     response = redirect('/edit_repository_tags/{}'.format(repository_id))
     return response
