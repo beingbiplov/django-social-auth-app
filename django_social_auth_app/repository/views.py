@@ -86,5 +86,5 @@ def new_tag(request, repository_id):
     repository.tags.add(tag)
     repository.save()
 
-    response = redirect('/edit_repository_tags/{}'.format(repository_id))
+    response = redirect('edit_repository_tags', repository_id=repository_id)
     return response
